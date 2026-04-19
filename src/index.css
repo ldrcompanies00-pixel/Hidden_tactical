@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-black: #0D0D0D;
+  --color-brand-charcoal: #1A1A1A;
+  --color-brand-toxic: #39FF14;
+  --color-brand-neon: #39FF14; /* Alias for consistency */
+  --color-brand-white: #F2F2F2;
+  --color-brand-gray: #666666;
+  
+  --font-sans: 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-display: "Outfit", "Inter", sans-serif;
+
+  --animate-marquee: marquee 30s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-brand-black text-brand-white font-sans antialiased overflow-x-hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tighter uppercase font-black;
+  }
+}
+
+@layer components {
+  .checkered-border {
+    height: 10px;
+    width: 100%;
+    background-image: 
+      linear-gradient(45deg, #000 25%, transparent 25%), 
+      linear-gradient(-45deg, #000 25%, transparent 25%), 
+      linear-gradient(45deg, transparent 75%, #000 75%), 
+      linear-gradient(-45deg, transparent 75%, #000 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    background-color: var(--color-brand-white);
+    opacity: 0.8;
+  }
+
+  .tread-pattern-overlay {
+    background-image: repeating-linear-gradient(45deg, #151515, #151515 10px, transparent 10px, transparent 20px);
+    opacity: 0.3;
+  }
+
+  .tactical-border {
+    @apply border border-brand-charcoal hover:border-brand-toxic/50 transition-colors duration-300;
+  }
+  
+  .glass-card {
+    @apply bg-brand-charcoal/80 backdrop-blur-md border border-brand-white/10;
+  }
+
+  .neon-glow {
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
+  }
+}

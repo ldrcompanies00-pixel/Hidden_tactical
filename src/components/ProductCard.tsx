@@ -30,7 +30,7 @@ export default function ProductCard({ product, onAddToCart, onSelectItem }: Prod
 
       {/* Product Info */}
       <div className="relative z-10 mt-auto flex items-end justify-between">
-        <div className="mb-2">
+        <div className="mb-2 transition-opacity duration-300 group-hover:opacity-0">
           <span className="font-sans font-bold text-xs text-brand-toxic block mb-1">
             ${product.price}.00
           </span>
@@ -47,7 +47,7 @@ export default function ProductCard({ product, onAddToCart, onSelectItem }: Prod
             e.stopPropagation();
             onAddToCart(product);
           }}
-          className="w-10 h-10 bg-brand-toxic text-brand-black flex items-center justify-center hover:bg-white transition-colors"
+          className="w-10 h-10 bg-brand-toxic text-brand-black flex items-center justify-center hover:bg-white hover:text-brand-black transition-colors group-hover:bg-brand-black group-hover:text-brand-toxic relative z-20"
         >
           <Plus className="w-5 h-5" />
         </button>

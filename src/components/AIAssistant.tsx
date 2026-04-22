@@ -32,14 +32,17 @@ export default function AIAssistant() {
         body: JSON.stringify({ prompt: input }),
       });
 
-      if (!res.ok) throw new Error("Link failed");
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Link failed");
+      }
       const data = await res.json();
 
-      const botMsg = { role: 'bot' as const, text: data.text || "COMM_ERROR: Signal lost. Re-establishing link..." };
+      const botMsg = { role: 'bot' as const, text: data.text || "COMM_ERROR: Signal lost." };
       setMessages(prev => [...prev, botMsg]);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setMessages(prev => [...prev, { role: 'bot', text: 'FATAL_ERROR: Uplink compromised. Try again.' }]);
+      setMessages(prev => [...prev, { role: 'bot', text: `ERROR: ${err.message}` }]);
     } finally {
       setLoading(false);
     }

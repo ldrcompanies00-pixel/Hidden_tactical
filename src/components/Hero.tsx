@@ -17,7 +17,7 @@ export default function Hero() {
             <p className="font-display font-black text-xs tracking-[5px] text-brand-toxic uppercase mb-6">
               Tactical Supermoto
             </p>
-            <h1 className="text-[110px] md:text-[140px] leading-[0.85] mb-12 font-black tracking-[-6px]">
+            <h1 className="text-[18vw] sm:text-[110px] md:text-[140px] leading-[0.85] mb-12 font-black tracking-[-6px]">
               STAY <br />
               <span className="text-transparent stroke-white" style={{ WebkitTextStroke: '1px var(--color-brand-white)' }}>UNSEEN</span> <br />
               RIDE FAST

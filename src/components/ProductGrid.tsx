@@ -42,20 +42,20 @@ export default function ProductGrid({ onAddToCart, onSelectItem, initialFilter =
 
   return (
     <section id="products" className="py-24 max-w-7xl mx-auto px-6">
-      <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-4">
+      <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-16 gap-8">
         <div>
-          <h2 className="text-7xl font-black italic leading-none tracking-tighter">THE_ARCHIVE</h2>
+          <h2 className="text-5xl sm:text-7xl font-black italic leading-none tracking-tighter">THE_ARCHIVE</h2>
           <p className="font-sans text-[10px] text-brand-gray mt-4 tracking-[3px] uppercase font-bold">
             [ CURRENT_DROP // VOLUME_04 ]
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2 w-full md:w-auto">
           {["Gear", "Street", "Customs", "Archive"].map((cat) => (
             <button 
               key={cat} 
               onClick={() => setFilter(cat)}
               className={cn(
-              "font-sans text-[10px] uppercase tracking-[2px] px-6 py-2 border border-[#222] hover:border-brand-toxic hover:text-brand-toxic transition-all font-bold",
+              "font-sans text-[10px] uppercase tracking-[1px] px-3 py-1.5 border border-[#222] hover:border-brand-toxic hover:text-brand-toxic transition-all font-bold",
               cat === filter ? "text-brand-toxic border-brand-toxic" : "text-white/50"
             )}>
               {cat}

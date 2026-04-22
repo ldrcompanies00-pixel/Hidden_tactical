@@ -66,7 +66,7 @@ function AppContent() {
       <div className="checkered-border fixed top-0 left-0 z-[100]" />
       
       {/* Background Badge */}
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-display font-black text-[12vw] leading-none whitespace-nowrap opacity-[0.03] rotate-[-15deg] pointer-events-none uppercase z-0">
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-display font-black text-[20vw] whitespace-nowrap opacity-[0.03] rotate-[-15deg] pointer-events-none uppercase z-0">
         Underground Elite
       </div>
 
@@ -90,7 +90,7 @@ function AppContent() {
         </Routes>
       </main>
 
-      <div className="sidebar-info fixed right-10 bottom-16 [writing-mode:vertical-rl] rotate-180 flex items-center gap-8 font-mono text-[10px] text-brand-gray tracking-[4px] z-50 pointer-events-none">
+      <div className="sidebar-info hidden md:flex fixed right-10 bottom-16 [writing-mode:vertical-rl] rotate-180 items-center gap-8 font-mono text-[10px] text-brand-gray tracking-[4px] z-50 pointer-events-none">
         2024 COLLECTION — DESIGNED IN THE SHADOWS
         <div className="w-px h-24 bg-brand-gray" />
       </div>
@@ -117,10 +117,10 @@ function AppContent() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-full max-w-md bg-brand-black border-l border-white/5 z-[120] flex flex-col p-8"
+              className="fixed top-0 right-0 h-full w-full max-w-md bg-brand-black border-l border-white/5 z-[120] flex flex-col p-6 md:p-8"
             >
-              <div className="flex items-center justify-between mb-12">
-                <h2 className="text-4xl italic font-black">YOUR_GEAR</h2>
+              <div className="flex items-center justify-between mb-8 md:mb-12">
+                <h2 className="text-3xl md:text-4xl italic font-black">YOUR_GEAR</h2>
                 <button onClick={() => setIsCartOpen(false)} className="w-10 h-10 border border-white/10 flex items-center justify-center hover:text-brand-toxic">
                   <X className="w-6 h-6" />
                 </button>
@@ -207,25 +207,25 @@ function AppContent() {
                 </div>
               </div>
 
-              <div className="p-10 md:p-20 flex flex-col">
-                <div className="mb-12">
-                  <span className="font-display font-black text-xs text-brand-toxic tracking-[5px] uppercase mb-4 block">
+              <div className="p-8 sm:p-12 md:p-20 flex flex-col">
+                <div className="mb-8 md:mb-12">
+                  <span className="font-display font-black text-[10px] sm:text-xs text-brand-toxic tracking-[3px] sm:tracking-[5px] uppercase mb-4 block">
                     {selectedProduct.category} // ARCHIVE_004
                   </span>
-                  <h2 className="text-6xl md:text-8xl italic font-black uppercase leading-[0.85] tracking-tighter mb-8">
+                  <h2 className="text-3xl sm:text-6xl md:text-8xl italic font-black uppercase leading-[0.85] tracking-tighter mb-6 md:mb-8">
                     {selectedProduct.name}
                   </h2>
-                  <p className="font-sans text-brand-gray text-lg leading-relaxed uppercase tracking-tight font-bold">
+                  <p className="font-sans text-brand-gray text-base sm:text-lg leading-relaxed uppercase tracking-tight font-bold">
                     {selectedProduct.description}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-8 mb-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8 md:mb-12">
                   <div>
                     <h5 className="font-mono text-[10px] text-white/20 uppercase tracking-[3px] mb-4">Specs_Analysis</h5>
                     <ul className="space-y-3">
                       {selectedProduct.specs.map((spec, i) => (
-                        <li key={i} className="font-mono text-xs text-white/60 flex items-center gap-3">
+                        <li key={i} className="font-mono text-[10px] sm:text-xs text-white/60 flex items-center gap-3">
                           <div className="w-1 h-1 bg-brand-toxic" />
                           {spec}
                         </li>
@@ -240,17 +240,17 @@ function AppContent() {
                   </div>
                 </div>
 
-                <div className="mt-auto flex items-center gap-8 border-t border-white/5 pt-12">
+                <div className="mt-auto flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-8 border-t border-white/5 pt-10 md:pt-12">
                   <div className="flex flex-col">
                     <span className="font-mono text-[10px] text-white/20 uppercase">Unit_Price</span>
-                    <span className="font-display font-black text-4xl">${selectedProduct.price}.00</span>
+                    <span className="font-display font-black text-3xl sm:text-4xl">${selectedProduct.price}.00</span>
                   </div>
                   <button 
                     onClick={() => {
                       addToCart(selectedProduct);
                       setSelectedProduct(null);
                     }}
-                    className="flex-1 bg-brand-toxic text-brand-black h-16 flex items-center justify-center font-display font-black uppercase text-sm tracking-[0.2em] transform hover:scale-[1.02] transition-all"
+                    className="w-full sm:flex-1 bg-brand-toxic text-brand-black h-14 sm:h-16 flex items-center justify-center font-display font-black uppercase text-sm tracking-[0.2em] transform hover:scale-[1.02] transition-all"
                   >
                     ADD_TO_DEPOT
                   </button>

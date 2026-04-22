@@ -138,7 +138,7 @@ export default function Checkout({ cart, total, onClearCart }: CheckoutProps) {
               exit={{ opacity: 0, x: 20 }}
               className="space-y-8"
             >
-              <h2 className="text-6xl italic font-black tracking-tighter uppercase mb-12">TACTICAL_DROP</h2>
+              <h2 className="text-3xl sm:text-5xl md:text-6xl italic font-black tracking-tighter uppercase mb-12">TACTICAL_DROP</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="font-mono text-[10px] text-brand-gray uppercase tracking-widest px-2">Sector_Address</label>
@@ -172,7 +172,7 @@ export default function Checkout({ cart, total, onClearCart }: CheckoutProps) {
               exit={{ opacity: 0, x: 20 }}
               className="space-y-8"
             >
-              <h2 className="text-6xl italic font-black tracking-tighter uppercase mb-12">SENDER_ID</h2>
+              <h2 className="text-3xl sm:text-5xl md:text-6xl italic font-black tracking-tighter uppercase mb-12">SENDER_ID</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="font-mono text-[10px] text-brand-gray uppercase tracking-widest px-2">First_Name</label>
@@ -203,7 +203,7 @@ export default function Checkout({ cart, total, onClearCart }: CheckoutProps) {
               exit={{ opacity: 0, x: 20 }}
               className="space-y-8"
             >
-              <h2 className="text-6xl italic font-black tracking-tighter uppercase mb-12">CREDIT_UPLINK</h2>
+              <h2 className="text-3xl sm:text-5xl md:text-6xl italic font-black tracking-tighter uppercase mb-12">CREDIT_UPLINK</h2>
               <div className="space-y-6">
                 <div className="space-y-2">
                   <label className="font-mono text-[10px] text-brand-gray uppercase tracking-widest px-2">Card_Hash</label>
@@ -256,7 +256,7 @@ export default function Checkout({ cart, total, onClearCart }: CheckoutProps) {
               className="flex flex-col items-center justify-center py-12 text-center"
             >
               <CheckCircle className="w-24 h-24 text-brand-toxic mb-8" />
-              <h2 className="text-7xl italic font-black tracking-tighter uppercase mb-6">SIGNAL_CONFIRMED</h2>
+              <h2 className="text-4xl sm:text-6xl md:text-7xl italic font-black tracking-tighter uppercase mb-6">SIGNAL_CONFIRMED</h2>
               <div className="bg-brand-charcoal p-12 border border-brand-toxic/50 max-w-lg w-full mb-12 shadow-[0_0_50px_rgba(57,255,20,0.1)]">
                 <div className="space-y-6 text-left">
                   <div className="flex justify-between font-mono text-xs">

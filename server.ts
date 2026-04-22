@@ -134,8 +134,10 @@ async function startServer() {
 
     try {
       const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash",
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+      const chatAction = await model.generateContent({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
         systemInstruction: `You are the "Hidden Supply Specialist", a tactical AI for a high-end Supermoto/Motocross streetwear brand called "Hidden". 
         Your tone is professional, technical, mysterious, and tactical. 
         Use terms like "Depot", "Analysis", "Briefing", "Sector", "Thermal Protection".
@@ -143,14 +145,17 @@ async function startServer() {
         Respond concisely. If asked for a recommendation, explain the tactical advantage of the gear (e.g. anti-fog, knuckle protection, moisture-wicking).`,
       });
 
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
+      const response = await chatAction.response;
       const text = response.text();
 
+      if (!text) throw new Error("Empty response from AI");
       res.json({ text });
-    } catch (error) {
+    } catch (error: any) {
       console.error("AI Error:", error);
-      res.status(500).json({ error: "FATAL_ERROR: Uplink compromised." });
+      res.status(500).json({ 
+        error: "FATAL_ERROR", 
+        message: error.message || "Uplink compromised." 
+      });
     }
   });
 

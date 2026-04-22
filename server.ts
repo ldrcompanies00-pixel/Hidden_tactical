@@ -10,7 +10,7 @@ import Stripe from "stripe";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const db = new Database('platform.db');
+const db = new Database(path.join(process.cwd(), 'platform.db'));
 db.pragma('journal_mode = WAL');
 
 // Initialize Database Tables
@@ -459,15 +459,16 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), "dist");
+    // We use __dirname because it is relative to dist/server.js
+    const distPath = __dirname;
     app.use(express.static(distPath));
     app.get("*", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`[HIDDEN] Server deployed at http://localhost:${PORT}`);
+  app.listen(PORT, () => {
+    console.log(`[HIDDEN] Server is live on port ${PORT}`);
   });
 }
 

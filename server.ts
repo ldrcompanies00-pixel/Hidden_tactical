@@ -459,11 +459,23 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    // We use __dirname because it is relative to dist/server.js
+    // Determine the absolute path to the static files
+    // In Hostinger, dist/server.js is the entry point, so __dirname is the dist folder.
     const distPath = __dirname;
+    const indexPath = path.join(distPath, "index.html");
+
+    console.log(`[HIDDEN] Attempting to serve static files from: ${distPath}`);
+    console.log(`[HIDDEN] Looking for index.html at: ${indexPath}`);
+
     app.use(express.static(distPath));
+    
     app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
+      res.sendFile(indexPath, (err) => {
+        if (err) {
+          console.error(`[HIDDEN] Failed to send index.html: ${err.message}`);
+          res.status(500).send("Server Error: Missing static files. Please check build logs.");
+        }
+      });
     });
   }
 

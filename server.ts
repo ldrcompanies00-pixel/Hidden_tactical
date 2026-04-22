@@ -41,6 +41,7 @@ db.exec(`
     status TEXT NOT NULL,
     total REAL NOT NULL,
     createdAt TEXT NOT NULL,
+    paymentMethod TEXT,
     awbNumber TEXT,
     awbStatus TEXT,
     invoiceNumber TEXT,
@@ -259,6 +260,7 @@ async function startServer() {
       status: "pending",
       total: orderData.total || 0,
       createdAt: new Date().toISOString(),
+      paymentMethod: orderData.paymentMethod || 'card',
       awbStatus: "not_generated",
       invoiceStatus: "not_generated",
       awbNumber: null,
@@ -268,8 +270,8 @@ async function startServer() {
     };
 
     db.prepare(`
-      INSERT INTO orders (id, userId, status, total, createdAt, awbStatus, invoiceStatus, awbNumber, invoiceNumber, customerData, itemsData) 
-      VALUES (@id, @userId, @status, @total, @createdAt, @awbStatus, @invoiceStatus, @awbNumber, @invoiceNumber, @customerData, @itemsData)
+      INSERT INTO orders (id, userId, status, total, createdAt, paymentMethod, awbStatus, invoiceStatus, awbNumber, invoiceNumber, customerData, itemsData) 
+      VALUES (@id, @userId, @status, @total, @createdAt, @paymentMethod, @awbStatus, @invoiceStatus, @awbNumber, @invoiceNumber, @customerData, @itemsData)
     `).run(newOrder);
 
     // Simulate processing

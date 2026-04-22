@@ -23,6 +23,7 @@ export default function Checkout({ cart, total, onClearCart }: CheckoutProps) {
     postalCode: "",
     email: ""
   });
+  const [paymentMethod, setPaymentMethod] = useState<"card" | "cod">("card");
   const { user } = useAuthStore();
   const navigate = useNavigate();
 
@@ -41,6 +42,7 @@ export default function Checkout({ cart, total, onClearCart }: CheckoutProps) {
           items: cart,
           total,
           customer: customerData,
+          paymentMethod,
           timestamp: new Date().toISOString()
         })
       });
@@ -204,28 +206,55 @@ export default function Checkout({ cart, total, onClearCart }: CheckoutProps) {
               className="space-y-8"
             >
               <h2 className="text-3xl sm:text-5xl md:text-6xl italic font-black tracking-tighter uppercase mb-12">CREDIT_UPLINK</h2>
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <label className="font-mono text-[10px] text-brand-gray uppercase tracking-widest px-2">Card_Hash</label>
-                  <div className="relative">
-                    <input type="text" placeholder="XXXX XXXX XXXX XXXX" className="w-full bg-brand-charcoal border border-white/5 p-4 text-sm font-mono focus:border-brand-toxic transition-colors outline-none" required />
-                    <CreditCard className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20" />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="font-mono text-[10px] text-brand-gray uppercase tracking-widest px-2">Expiry_Pulse</label>
-                    <input type="text" placeholder="MM/YY" className="w-full bg-brand-charcoal border border-white/5 p-4 text-sm font-mono focus:border-brand-toxic transition-colors outline-none" required />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="font-mono text-[10px] text-brand-gray uppercase tracking-widest px-2">CVV_Code</label>
-                    <input type="text" placeholder="XXX" className="w-full bg-brand-charcoal border border-white/5 p-4 text-sm font-mono focus:border-brand-toxic transition-colors outline-none" required />
-                  </div>
-                </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+                <button 
+                  onClick={() => setPaymentMethod("card")}
+                  className={`p-6 border flex flex-col items-center gap-4 transition-all ${paymentMethod === "card" ? "border-brand-toxic bg-brand-toxic/5" : "border-white/5 bg-brand-charcoal hover:border-white/20"}`}
+                >
+                  <CreditCard className={`w-8 h-8 ${paymentMethod === "card" ? "text-brand-toxic" : "text-white/40"}`} />
+                  <span className="font-display font-black uppercase text-xs tracking-widest text-center">Tactical_Card</span>
+                </button>
+                <button 
+                  onClick={() => setPaymentMethod("cod")}
+                  className={`p-6 border flex flex-col items-center gap-4 transition-all ${paymentMethod === "cod" ? "border-brand-toxic bg-brand-toxic/5" : "border-white/5 bg-brand-charcoal hover:border-white/20"}`}
+                >
+                  <Package className={`w-8 h-8 ${paymentMethod === "cod" ? "text-brand-toxic" : "text-white/40"}`} />
+                  <span className="font-display font-black uppercase text-xs tracking-widest text-center">Cash_On_Drop</span>
+                </button>
               </div>
+
+              {paymentMethod === "card" ? (
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="font-mono text-[10px] text-brand-gray uppercase tracking-widest px-2">Card_Hash</label>
+                    <div className="relative">
+                      <input type="text" placeholder="XXXX XXXX XXXX XXXX" className="w-full bg-brand-charcoal border border-white/5 p-4 text-sm font-mono focus:border-brand-toxic transition-colors outline-none" required />
+                      <CreditCard className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20" />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="font-mono text-[10px] text-brand-gray uppercase tracking-widest px-2">Expiry_Pulse</label>
+                      <input type="text" placeholder="MM/YY" className="w-full bg-brand-charcoal border border-white/5 p-4 text-sm font-mono focus:border-brand-toxic transition-colors outline-none" required />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="font-mono text-[10px] text-brand-gray uppercase tracking-widest px-2">CVV_Code</label>
+                      <input type="text" placeholder="XXX" className="w-full bg-brand-charcoal border border-white/5 p-4 text-sm font-mono focus:border-brand-toxic transition-colors outline-none" required />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-brand-toxic/5 border border-brand-toxic/20 p-8">
+                  <h4 className="font-display font-black italic uppercase text-lg mb-4 text-brand-toxic">COD_PROTOCOL_ACTIVE</h4>
+                  <p className="font-mono text-[10px] text-white/60 leading-relaxed uppercase">
+                    Our operative will deliver your equipment directly to your drop location. Please have the exact credit amount ready for the trade. No high-value security bills over $100 accepted.
+                  </p>
+                </div>
+              )}
               
               <p className="font-mono text-[10px] text-brand-gray uppercase text-center mt-12 bg-white/5 p-4 border border-white/5 italic">
-                Secure transaction bypass active. Your credentials are encrypted on a local node.
+                {paymentMethod === "card" ? "Secure transaction bypass active. Your credentials are encrypted on a local node." : "Signal encryption maintained. Payment to be verified upon physical drop."}
               </p>
 
               <div className="flex gap-4">

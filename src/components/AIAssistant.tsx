@@ -1,9 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { GoogleGenAI } from "@google/genai";
 import { motion, AnimatePresence } from "motion/react";
 import { HelpCircle, X, Send, Terminal, Shield } from "lucide-react";
-
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export default function AIAssistant() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,19 +26,16 @@ export default function AIAssistant() {
     setLoading(true);
 
     try {
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        config: {
-          systemInstruction: `You are the "Hidden Supply Specialist", a tactical AI for a high-end Supermoto/Motocross streetwear brand called "Hidden". 
-          Your tone is professional, technical, mysterious, and tactical. 
-          Use terms like "Depot", "Analysis", "Briefing", "Sector", "Thermal Protection".
-          The brand sells: Tactical Stealth Goggles, Carbon Grip Gloves, Heavyweight Hoodies, and Technical Balaclavas. 
-          Respond concisely. If asked for a recommendation, explain the tactical advantage of the gear (e.g. anti-fog, knuckle protection, moisture-wicking).`,
-        },
-        contents: input,
+      const res = await fetch("/api/ai/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: input }),
       });
 
-      const botMsg = { role: 'bot' as const, text: response.text || "COMM_ERROR: Signal lost. Re-establishing link..." };
+      if (!res.ok) throw new Error("Link failed");
+      const data = await res.json();
+
+      const botMsg = { role: 'bot' as const, text: data.text || "COMM_ERROR: Signal lost. Re-establishing link..." };
       setMessages(prev => [...prev, botMsg]);
     } catch (err) {
       console.error(err);

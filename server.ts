@@ -6,6 +6,7 @@ import { createServer as createViteServer } from "vite";
 import axios from "axios";
 import Database from "better-sqlite3";
 import Stripe from "stripe";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -121,6 +122,37 @@ async function startServer() {
   const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 
   app.use(express.json());
+
+  // AI Assistant Route
+  app.post("/api/ai/chat", async (req, res) => {
+    const { prompt } = req.body;
+    const apiKey = process.env.GEMINI_API_KEY;
+
+    if (!apiKey) {
+      return res.status(500).json({ error: "AI uplink offline: GEMINI_API_KEY missing." });
+    }
+
+    try {
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-flash",
+        systemInstruction: `You are the "Hidden Supply Specialist", a tactical AI for a high-end Supermoto/Motocross streetwear brand called "Hidden". 
+        Your tone is professional, technical, mysterious, and tactical. 
+        Use terms like "Depot", "Analysis", "Briefing", "Sector", "Thermal Protection".
+        The brand sells: Tactical Stealth Goggles, Carbon Grip Gloves, Heavyweight Hoodies, and Technical Balaclavas. 
+        Respond concisely. If asked for a recommendation, explain the tactical advantage of the gear (e.g. anti-fog, knuckle protection, moisture-wicking).`,
+      });
+
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+
+      res.json({ text });
+    } catch (error) {
+      console.error("AI Error:", error);
+      res.status(500).json({ error: "FATAL_ERROR: Uplink compromised." });
+    }
+  });
 
   // API Routes
   app.get("/api/products", (req, res) => {
